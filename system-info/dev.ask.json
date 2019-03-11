@@ -1,0 +1,20 @@
+
+[
+    {
+        "name": "ASK-Auskunft",
+        "url" : "https://services.dev.ask.cp.creditreform.de:8445/ask-auskunft/v1/info/systemInfo"
+    },
+    {
+        "name" : "ASK-Verzeichnis",
+        "url" : "https://services.dev.ask.cp.creditreform.de:8447/ask-verzeichnis/v1/info/systemInfo"
+    },
+    {
+        "name" : "ASK-Inkasse",
+        "url" : "https://services.dev.ask.cp.creditreform.de:8443/ask-inkasso/v1/info/systemInfo"
+    },
+    {
+        "name" : "VZ-App",
+        "url" : "https://cto-mock.dev.ask.cp.creditreform.de:8449/directoryService/v1/info/systemInfo",
+        "basicAuth" : "vzuser,vzpass"
+    }
+]
