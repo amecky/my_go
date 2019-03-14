@@ -2,7 +2,8 @@ package main
 
 import (
 	"os"
-    "encoding/json"
+	"encoding/json"
+	"encoding/xml"
     "fmt"
     "io/ioutil"
 	"net/http"
@@ -14,6 +15,7 @@ type SystemDef struct {
 	Name string
 	Url string
 	BasicAuth string
+	MediaType string
 }
 
 func parse_file(env,filename string) []SystemDef {
@@ -37,11 +39,12 @@ var ExternalSystem = map[string]string {
     "ASK-Inkasse" : "https://services.dev.ask.cp.creditreform.de:8443/ask-inkasso/v1/info/systemInfo",
 }
 
-type SystemInfo struct {
+type InfoData struct {
     ServiceName string
-    ServiceHealth string
-	WarVersion string
-	CalledServices map[string]SystemInfo `json:"calledServices"`
+	ServiceHealth string `xml:"serviceHealth"`
+	ServiceDescription string `xml:"serviceDescription" json:"healthDescription"`
+	WarVersion string `xml:"warVersion"`
+	CalledServices map[string]InfoData `json:"calledServices"`
 }
 
 func basicAuth(username, password string) string {
@@ -65,15 +68,22 @@ func show_system_info(definition SystemDef) {
 		if ler != nil {
 			fmt.Printf("The HTTP request failed with error %s\n", ler)
 		} else {
-			//fmt.Println(string(data))
-			var info SystemInfo
-			if err := json.Unmarshal(data, &info); err != nil {
-				panic(err)
+			var info InfoData
+			if  definition.MediaType == "xml" {
+				fmt.Println(string(data))
+				if err := xml.Unmarshal(data, &info); err != nil {
+					panic(err)
+				}
+			} else {
+				if err := json.Unmarshal(data, &info); err != nil {
+					panic(err)
+				}
 			}
 			fmt.Printf("System info   : %s\n",definition.Name)
 			fmt.Printf("Service       : %s\n",info.ServiceName)
 			fmt.Printf("Health status : %s\n",info.ServiceHealth)
 			fmt.Printf("Version       : %s\n",info.WarVersion)
+			fmt.Printf("Description   : %s\n",info.ServiceDescription)
 			fmt.Printf("Services      : %d\n", len(info.CalledServices))
 			for cs := range info.CalledServices {
 				current := info.CalledServices[cs]
@@ -90,7 +100,4 @@ func main() {
 	for _, current := range definitions {
 		show_system_info(current)
 	}
-    //for k := range ExternalSystem {
-        //show_system_info(k, ExternalSystem[k])
-    //}
 }

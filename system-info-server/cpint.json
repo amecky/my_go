@@ -1,0 +1,100 @@
+[
+    {
+            "name" : "ask-auskunft",
+            "url" : "https://services.cpint.cp.creditreform.de:8445/ask-auskunft/v1/info/systemInfo"
+    },
+    {
+            "name" : "ask-consumer",
+            "url" : "https://services.cpint.cp.creditreform.de:8454/ask-consumer/v1/info/systemInfo"
+    },
+    {
+            "name" : "ask-ims",
+            "url" : "https://services.cpint.cp.creditreform.de:8444/ask-ims/v1/info/systemInfo"
+    },
+    {
+            "name" : "ask-inkasso",
+            "url" : "https://services.cpint.cp.creditreform.de:8443/ask-inkasso/v1/info/systemInfo"
+    },
+    {
+            "name" : "ask-notification",
+            "url" : "https://services.cpint.cp.creditreform.de:8448/ask-notification/v1/info/systemInfo"
+    },
+    {
+            "name" : "ask-vertrag",
+            "url" : "https://services.cpint.cp.creditreform.de:8446/ask-vertrag/v1/info/systemInfo"
+    },
+    {
+            "name" : "ask-verflechtung",
+            "url" : "https://services.cpint.cp.creditreform.de:8456/ask-verflechtung/v1/info/systemInfo"
+    },
+    {
+            "name" : "ask-verzeichnis",
+            "url" : "https://services.cpint.cp.creditreform.de:8447/ask-verzeichnis/v1/info/systemInfo"
+    },
+    {
+            "name" : "ssoAuthenticatorService",
+            "url" : "https://services.cpint.cp.creditreform.de:8450/ssoAuthenticatorService/v1/info/systemInfo"
+    },
+    {
+            "name" : "consumer-renderer",
+            "url" : "https://services.cpint.cp.creditreform.de:8455/consumer-renderer/v1/info/systemInfo"
+    },
+    {
+            "name" : "auskunft-service",
+            "url" : "https://app.vz.cpint.cp.creditreform.de:8460/auskunft-service/v1/info/systemInfo"
+    },
+    {
+            "name" : "directoryService",
+            "url" : "https://app.vz.cpint.cp.creditreform.de:8443/directoryService/v1/info/systemInfo",
+            "basicAuth" : "vzuser,vzpass"
+    },
+    {
+            "name" : "eventsystem",
+            "url" : "https://app.vz.cpint.cp.creditreform.de:8453/eventsystem/v1/info/systemInfo",
+            "basicAuth" : "evnuser,evnpass"
+    },
+    {
+            "name" : "notificationsystem",
+            "url" : "https://app.vz.cpint.cp.creditreform.de:8452/notificationsystem/v1/info/systemInfo",
+            "basicAuth" : "nosuser,nospass"
+    },
+    {
+            "name" : "mailsender",
+            "url" : "https://app.vz.cpint.cp.creditreform.de:8454/mailsender/v1/info/systemInfo",
+            "basicAuth" : "msuser,mspass"
+    },
+    {
+            "name" : "cr-auth",
+            "url" : "https://services.cpint.cp.creditreform.de:8453/cr-auth/v1/info/systemInfo",
+            "basicAuth" : "cruser,crpass"
+    },
+    {
+            "name" : "ubo-service",
+            "url" : "https://app.vz.cpint.cp.creditreform.de:8457/ubo-service/v1/info/systemInfo"
+    },
+    {
+            "name" : "wkv-system",
+            "url" : "https://app.vz.cpint.cp.creditreform.de:8456/wkv-system/v1/info/systemInfo"
+    },
+    {
+            "name" : "CTL-Mock",
+            "url" : "http://cto-mock.cpint.cp.creditreform.de:8083/ctl/cr/crefoportal/info/systemInfo.xml",
+            "mediaType" : "xml"
+    },    
+    {
+            "name" : "CTOI-Mock",
+            "url" : "http://cto-mock.cpint.cp.creditreform.de:8085/v1/info/systemInfo"
+    },
+    {
+            "name" : "CTOA-Mock",
+            "url" : "http://cto-mock.cpint.cp.creditreform.de:8081/ctocrefoportal/info/systemInfo.xml",
+            "mediaType" : "xml",
+            "basicAuth" : "guest,guest"
+    }
+    ,
+    {
+            "name" : "CTOV-Mock",
+            "url" : "https://cto-mock.cpint.cp.creditreform.de:8445/rechnungsdatenweb/services/rechnungen/isalive",
+            "mediaType" : "xml"
+    }
+]
