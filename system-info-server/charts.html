@@ -3,6 +3,7 @@
     <head>
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.3/Chart.min.js" crossorigin="anonymous"></script>
         <script type="text/javascript">
             function handleSelect(elm) {
                 window.location = "/info/" + elm.value;
@@ -47,40 +48,55 @@
         
         <div class="header">
 
-            <h1>System Info: {{.Environment}}</h1>
-
-            <form class="form-inline">
-                <div class="form-group">
-                    <label for="envSelection">Environment</label>
-                    <select name="envSelection" onchange="javascript:handleSelect(this)" class="form-control">
-                        <option value="dev.ask" {{if eq .Environment "dev.ask"}} selected="selected"{{end}}>DEV-ASK</option>
-                        <option value="cpint" {{if eq .Environment "cpint"}} selected="selected"{{end}}>CPINT</option>
-                        <option value="abcp" {{if eq .Environment "abcp"}} selected="selected"{{end}}>ABCP</option>
-                    </select>
-                </div>
-            </form>
+            <h1>Performance Data: {{.Path}}</h1>
+            
         </div>
         
         <div class="container">
                 <div class="row">
-                {{range $index, $elem := .Infos}}
-                    <div class="col-sm-12 col-md-3 col-xs-12">
-                        {{if eq $elem.ServiceHealth "OK"}} <div class="panel"> {{else}} <div class="panel danger">{{end}}
-                            <h3><a href="{{$elem.Url}}/systemInfo" target="_blank">{{$elem.ServiceName}}</a></h3>
-                            <h4>{{$elem.WarVersion}}</h4>
-                            <p>{{$elem.ServiceDescription}}</p>
-                            <p>
-                                {{if eq $elem.SupportMetrics true}}
-                                <a href="/info/{{$elem.Environment}}/requests/{{$elem.ServiceName}}">Requests</a>&nbsp;&nbsp;/&nbsp;&nbsp;
-                                {{end}}
-                                <a href="/info/{{$elem.Environment}}/metrics/{{$elem.ServiceName}}">Metrics</a>
-                        </p>
+                    <div class="col-sm-8 col-md-8 col-xs-8">
+                        <div class="panel">
+                            <canvas id="myChart" width="200" height="200"></canvas>
                         </div>
                     </div>
-                    {{if mod $index 4}} </div><div class="row">{{end}}                    
-                {{end}}
                 </div>
             </div>
         </div>
+        <script>
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: [{{range $index, $elem := .Data}} '{{$elem.RequestTimestamp}}', {{end}}],
+                    datasets: [{
+                        label: 'Dauer des Aufrufs in Millisekunden',
+                        data: [{{range $index, $elem := .Data}} {{$elem.Value}}, {{end}}],
+                        backgroundColor: [
+                        {{range $index, $elem := .Data}}'rgba(255, 99, 132, 0.8)',{{end}}
+                        ],
+                        borderColor: [
+                        {{range $index, $elem := .Data}}'rgba(255, 99, 132, 1)',{{end}}
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    scales: {
+                        yAxes: [{
+                            ticks: {
+                                beginAtZero: true
+                            }
+                        }],
+                        xAxes: [{
+                            ticks: {
+                                autoSkip: false,
+                                maxRotation: 90,
+                                minRotation: 90
+                            }
+                        }]
+                    }
+                }
+            });
+        </script>
     </body>
 </html>

@@ -1,0 +1,65 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha384-aJ21OjlMXNL5UyIl/XNwTMqvzeRMZH2w8c5cRVpzpU8Y5bApTppSuUkhZXN0VxHd" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            function handleSelect(elm) {
+                window.location = "/info/" + elm.value;
+            }
+        </script>
+        <style>
+                body {
+                    background-color: #ededed;
+                    font-family: Verdana, Geneva, Tahoma, sans-serif
+                }
+                .header {
+                    background-color: #fff;
+                    margin : 10px 0px;
+                    padding : 0.1em 2em;
+                }
+                .header h1 {
+                    margin : 10px 0px;
+                    font-size: 1.5em;
+                }
+                .container {
+                    background-color: #fff;
+                    padding : 0.6em;
+                }
+            </style>
+    </head>
+    <body>
+        
+        <div class="header">
+
+            <h1>Metrics: {{.Service}}</h1>
+
+        </div>
+        
+        {{$srv := .Service}}
+        {{$env := .Environment}}
+
+        <div class="container">
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Path</th><th>TotalCalls</th><th>Min</th><th>Max</th><th>Average</th><th>Samples</th>
+                    </tr>
+                </thead>
+                <tbody>
+                        
+                {{range $index, $elem := .Metrics}}
+                <tr>
+                    <td><a href="/info/{{$env}}/requests/{{$srv}}/charts?path={{$elem.Path}}">{{$elem.Path}}</a></td>
+                    <td>{{$elem.TotalCalls}}</td>
+                    <td>{{$elem.Min}} ms</td>
+                    <td>{{$elem.Max}} ms</td>
+                    <td>{{$elem.Average}} ms</td>
+                    <td>{{$elem.Samples}}</td>
+                </tr>
+                {{end}}
+                </tbody>
+            </table>
+        </div>
+    </body>
+</html>

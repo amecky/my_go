@@ -1,29 +1,58 @@
-
 [
     {
-        "name": "ASK-Auskunft",
-        "url" : "https://services.dev.ask.cp.creditreform.de:8445/ask-auskunft/v1/info/systemInfo",
-        "mediaType" : "json"
+        "name" : "ask-auskunft",
+        "url" : "https://services.dev.ask.cp.creditreform.de:8445/ask-auskunft/v1/info"
     },
     {
-        "name" : "ASK-Verzeichnis",
-        "url" : "https://services.dev.ask.cp.creditreform.de:8447/ask-verzeichnis/v1/info/systemInfo",
-        "mediaType" : "json"
+            "name" : "ask-consumer",
+            "url" : "https://services.dev.ask.cp.creditreform.de:8454/ask-consumer/v1/info"
     },
     {
-        "name" : "ASK-Inkasse",
-        "url" : "https://services.dev.ask.cp.creditreform.de:8443/ask-inkasso/v1/info/systemInfo",
-        "mediaType" : "json"
+            "name" : "ask-ims",
+            "url" : "https://services.dev.ask.cp.creditreform.de:8444/ask-ims/v1/info"
     },
     {
-        "name" : "VZ-App",
-        "url" : "https://cto-mock.dev.ask.cp.creditreform.de:8449/directoryService/v1/info/systemInfo",
-        "basicAuth" : "vzuser,vzpass",
-        "mediaType" : "json"
+            "name" : "ask-inkasso",
+            "url" : "https://services.dev.ask.cp.creditreform.de:8443/ask-inkasso/v1/info"
     },
     {
-        "name" : "CTL-Mock",
-        "url" : "https://cto-mock.dev.ask.cp.creditreform.de:8446/ctl/cr/crefoportal/info/systemInfo.xml",
-        "mediaType" : "xml"
+            "name" : "ask-notification",
+            "url" : "https://services.dev.ask.cp.creditreform.de:8448/ask-notification/v1/info"
+    },
+    {
+            "name" : "ask-verflechtung",
+            "url" : "https://services.dev.ask.cp.creditreform.de:8456/ask-verflechtung/v1/info"
+    },
+    {
+            "name" : "ask-vertrag",
+            "url" : "https://services.dev.ask.cp.creditreform.de:8446/ask-vertrag/v1/info"
+    },
+    {
+            "name" : "ask-vertrag",
+            "url" : "https://services.dev.ims.cp.creditreform.de:8446/ask-vertrag/v1/info"
+    },
+    {
+            "name" : "ask-verzeichnis",
+            "url" : "https://services.dev.ask.cp.creditreform.de:8447/ask-verzeichnis/v1/info"
+    },
+    {
+            "name" : "consumer-renderer",
+            "url" : "https://services.dev.ask.cp.creditreform.de:8455/consumer-renderer/v1/info"
+    },
+    {
+            "name" : "auskunft-service",
+            "url" : "https://cto-mock.dev.ask.cp.creditreform.de:8460/auskunft-service/v1/info"
+    },
+    {
+            "name" : "directoryService",
+            "url" : "https://app.dev.vz.cp.creditreform.de:8443/directoryService/v1/info"
+    },
+    {
+            "name" : "eventsystem",
+            "url" : "https://cto-mock.dev.ask.cp.creditreform.de:8455/eventsystem/v1/info"
+    },
+    {
+        "name" : "notificationsystem",
+        "url" : "https://cto-mock.dev.ask.cp.creditreform.de:8452/notificationsystem/v1/info"
     }
 ]

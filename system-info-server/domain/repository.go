@@ -26,7 +26,7 @@ type Repository struct {
 	Environments map[string][]SystemDef
 }
 
-func Load_Environment(env string, filename string, repo *Repository) bool {
+func Load_Environment(env string, filename string, repo *Repository) bool {	
 	repo.Environments[env] = parse_file(filename)
 	return true
 }

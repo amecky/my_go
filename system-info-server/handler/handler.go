@@ -1,61 +1,13 @@
 package handler
 
-import (
-	"encoding/json"
-	"encoding/xml"
-	"fmt"
+import (	
 	"net/http"
 	"system-info-server/domain"
-	"strings"
-	"encoding/base64"
-	"io/ioutil"
+	"system-info-server/view"	
 	"github.com/gorilla/mux"
 	"html/template"
+	"strconv"
 )
-
-func basicAuth(username, password string) string {
-	auth := username + ":" + password
-	return base64.StdEncoding.EncodeToString([]byte(auth))
-}
-
-func load_infos(definitions []domain.SystemDef) []domain.InfoData {
-	var ret []domain.InfoData
-	for _, definition := range definitions {
-		client := &http.Client{}
-		req, err := http.NewRequest("GET", definition.Url, nil)
-		if definition.BasicAuth != "" {
-			params := strings.Split(definition.BasicAuth,",")
-			req.Header.Add("Authorization","Basic " + basicAuth(params[0],params[1]))
-		}
-		response, err := client.Do(req)
-		if err != nil {
-			fmt.Printf("The HTTP request failed with error %s\n", err)
-		} else {
-			data, ler := ioutil.ReadAll(response.Body)
-			if ler != nil {
-				fmt.Printf("The HTTP request failed with error %s\n", ler)
-			} else {
-				var info domain.InfoData
-				if  definition.MediaType == "xml" {
-					//fmt.Println(string(data))
-					if err := xml.Unmarshal(data, &info); err != nil {
-						fmt.Println(err)
-					} else {
-						ret = append(ret,info)
-					}
-				} else {
-					if err := json.Unmarshal(data, &info); err != nil {
-						fmt.Println(err)
-					} else {
-						ret = append(ret,info)
-					}
-				}
-				
-			}
-		}
-	}
-	return ret
-}
 
 func MakeGetSystemInfos(repository *domain.Repository) func(w http.ResponseWriter, r *http.Request) {
 	return func(w http.ResponseWriter, r *http.Request) {
@@ -63,12 +15,86 @@ func MakeGetSystemInfos(repository *domain.Repository) func(w http.ResponseWrite
 		params := mux.Vars(r)
 		env := params["env"]
 		definitions := repository.Environments[env]
-		infos := load_infos(definitions)
-		t, err := template.ParseFiles("list.html")
-		if err != nil {
-			panic(err)
-		} else {
-			t.Execute(w, infos)
+		var view view.ListView
+		view.Environment = env
+		view.Infos = LoadInfos(definitions, env)		
+		t := template.Must(template.New("list.html").Funcs(template.FuncMap{
+			"mod": func(i, j int) bool { return i + 1 % j == 0 },
+		}).ParseFiles("list.html"))
+		t.Execute(w, view)
+	}
+}
+
+func MakeGetRequests(repository *domain.Repository) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		params := mux.Vars(r)
+		env := params["env"]
+		service := params["service"]
+		var view view.RequestsView
+		view.Service = service
+		view.Environment = env
+		definitions := repository.Environments[env]
+		for _,current := range definitions {
+			if current.Name == service {
+				view.Requests = LoadRequests(current)
+			}
 		}
+		t := template.Must(template.New("requests.html").Funcs(template.FuncMap{
+			"mod": func(i, j int) bool { return i + 1 % j == 0 },
+		}).ParseFiles("requests.html"))
+		t.Execute(w, view)
+	}
+}
+
+func MakeGetMetrics(repository *domain.Repository) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		params := mux.Vars(r)
+		env := params["env"]
+		service := params["service"]
+		var view view.MetricsView
+		view.Service = service
+		view.Environment = env
+		definitions := repository.Environments[env]
+		for _,current := range definitions {
+			if current.Name == service {
+				view.Metrics = LoadMetrics(current)
+			}
+		}
+		t := template.Must(template.New("metrics.html").ParseFiles("metrics.html"))
+		t.Execute(w, view)
+	}
+}
+
+func MakeGetCharts(repository *domain.Repository) func(w http.ResponseWriter, r *http.Request) {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "text/html")
+		params := mux.Vars(r)
+		env := params["env"]
+		service := params["service"]
+		path,_ := r.URL.Query()["path"]
+		var cv view.ChartsView
+		cv.Path = path[0]
+		cv.Environment = env
+		definitions := repository.Environments[env]
+		for _,current := range definitions {
+			if current.Name == service {
+				requests := LoadRequests(current)
+				for idx, r := range requests {
+					if path[0] == r.Path {
+						if idx < 25 {
+							var pd view.PerformanceData
+							pd.Key = strconv.Itoa(idx)
+							pd.Value = r.Elapsed
+							pd.RequestTimestamp = r.RequestTimestamp
+							cv.Data = append(cv.Data,pd)
+						}
+					}
+				}
+			}
+		}
+		t := template.Must(template.New("charts.html").ParseFiles("charts.html"))
+		t.Execute(w, cv)
 	}
 }

@@ -1,0 +1,58 @@
+[
+    {
+        "name" : "ask-auskunft",
+        "url" : "https://services.abcp.creditreform.de:30006/ask-auskunft/v1/info"
+    },
+    {
+        "name" : "ask-ims",
+        "url" : "https://services.abcp.creditreform.de:30008/ask-ims/v1/info"
+    },
+    {
+        "name" : "ask-inkasso",
+        "url" : "https://services.abcp.creditreform.de:30010/ask-inkasso/v1/info"
+    },
+    {
+        "name" : "ask-notification",
+        "url" : "https://services.abcp.creditreform.de:30005/ask-notification/v1/info"
+    },
+    {
+        "name" : "ask-verflechtung",
+        "url" : "https://services.abcp.creditreform.de:30023/ask-verflechtung/v1/info"
+    },
+    {
+        "name" : "ask-vertrag",
+        "url" : "https://services.abcp.creditreform.de:30012/ask-vertrag/v1/info"
+    },
+    {
+        "name" : "ask-verzeichnis",
+        "url" : "https://services.abcp.creditreform.de:30014/ask-verzeichnis/v1/info"
+    },
+    {
+        "name" : "ubo-service",
+        "url" : "https://services.abcp.creditreform.de:30013/ubo-service/v1/info"
+    },
+    {
+        "name" : "ssoAuthenticatorService",
+        "url" : "https://services.abcp.creditreform.de:30021/ssoAuthenticatorService/v1/info"
+    },
+    {
+        "name" : "directoryService",
+        "url" : "https://services.abcp.creditreform.de:30016/directoryService/v1/info"
+    },
+    {
+        "name" : "eventsystem",
+        "url" : "https://services.abcp.creditreform.de:30026/eventsystem/v1/info"
+    },
+    {
+        "name" : "notificationsystem",
+        "url" : "https://services.abcp.creditreform.de:30024/notificationsystem/v1/info"
+    },
+    {
+        "name" : "mailsender",
+        "url" : "https://services.abcp.creditreform.de:30029/mailsender/v1/info"
+    },
+    {
+        "name" : "wkv-system",
+        "url" : "https://services.abcp.creditreform.de:30009/wkv-system/v1/info"
+    }    
+]
